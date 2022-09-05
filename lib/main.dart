@@ -40,40 +40,45 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void initState() {
     super.initState();
-    todoList = [TodoItem(todo: '출근하기', achieved: true, imagePath: '')];
+    todoList = [
+      TodoItem(
+          todo: '출근하기',
+          achieved: true,
+          imagePath: 'assets/images/emoji_think.png')
+    ];
+    bottomNavigator = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    bottomNavigator?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Container(
-            child: ListView.builder(
-          itemCount: todoList.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              child: Card(
-                  child: Container(
-                      height: 50,
-                      padding: EdgeInsets.only(
-                          left: 20, right: 20, top: 10, bottom: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(todoList[index].todo!),
-                          ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  todoList.removeAt(index);
-                                });
-                              },
-                              child: Icon(Icons.delete))
-                        ],
-                      ))),
-            );
-          },
-        )));
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: TabBarView(
+        children: <Widget>[
+          TodoListPage(list: todoList),
+          TodoWritePage(list: todoList)
+        ],
+        controller: bottomNavigator,
+      ),
+      bottomNavigationBar: TabBar(
+        tabs: <Tab>[
+          Tab(
+            icon: Icon(Icons.list_rounded, color: Colors.amber),
+          ),
+          Tab(
+            icon: Icon(Icons.edit, color: Colors.amber),
+          )
+        ],
+        controller: bottomNavigator,
+      ),
+    );
   }
 }
