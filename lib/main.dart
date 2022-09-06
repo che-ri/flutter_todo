@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 //widget
 import 'package:app/todoListPage.dart';
 import 'package:app/todoWritePage.dart';
+import 'package:app/todoDetailPage.dart';
 
 //provider
 import 'package:app/provider/todos.dart';
@@ -34,7 +35,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => TodoListPage(),
-        '/write': (context) => TodoWritePage()
+        '/write': (context) => TodoWritePage(),
+        '/detail': (context) => TodoDetailPage()
       },
     );
   }

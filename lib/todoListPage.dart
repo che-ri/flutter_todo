@@ -30,6 +30,9 @@ class _TodoListPageState extends State<TodoListPage> {
           itemCount: todo_list.length,
           itemBuilder: (context, index) {
             return GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/detail', arguments: index);
+              },
               child: Card(
                   child: Container(
                       padding: EdgeInsets.only(
