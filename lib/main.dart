@@ -1,14 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+//widget
 import 'package:app/todoListPage.dart';
 import 'package:app/todoWritePage.dart';
-import 'package:flutter/material.dart';
-import 'todoItem.dart';
+
+//provider
+import 'package:app/provider/todos.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<Todos>(
+        create: (context) => Todos(),
+      )
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -35,17 +47,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   TabController? bottomNavigator;
-  List<TodoItem> todoList = List.empty(growable: true);
+  // List<TodoItem> todoList = List.empty(growable: true);
 
   @override
   void initState() {
     super.initState();
-    todoList = [
-      TodoItem(
-          todo: '출근하기',
-          achieved: true,
-          imagePath: 'assets/images/emoji_think.png')
-    ];
     bottomNavigator = TabController(length: 2, vsync: this);
   }
 
@@ -62,10 +68,7 @@ class _MyHomePageState extends State<MyHomePage>
         title: Text(widget.title),
       ),
       body: TabBarView(
-        children: <Widget>[
-          TodoListPage(list: todoList),
-          TodoWritePage(list: todoList)
-        ],
+        children: <Widget>[TodoListPage(), TodoWritePage()],
         controller: bottomNavigator,
       ),
       bottomNavigationBar: TabBar(

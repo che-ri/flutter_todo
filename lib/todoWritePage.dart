@@ -2,9 +2,12 @@ import 'package:app/todoItem.dart';
 import 'package:flutter/material.dart';
 import 'todoItem.dart';
 
+//provider
+import 'package:app/provider/todos.dart';
+import 'package:provider/provider.dart';
+
 class TodoWritePage extends StatefulWidget {
-  List<TodoItem> list;
-  TodoWritePage({Key? key, required this.list}) : super(key: key);
+  const TodoWritePage({super.key});
 
   @override
   State<TodoWritePage> createState() => _TodoWritePageState();
@@ -36,6 +39,8 @@ class _TodoWritePageState extends State<TodoWritePage> {
 
   @override
   Widget build(BuildContext context) {
+    var todo_list = context.watch<Todos>().todos;
+
     return Scaffold(
       body: Center(
           child: Column(
@@ -90,7 +95,7 @@ class _TodoWritePageState extends State<TodoWritePage> {
                 var condition = todoItem.achieved == null &&
                     todoItem.todo == null &&
                     todoItem.imagePath == null;
-                condition ? null : widget.list.add(todoItem);
+                condition ? null : context.read<Todos>().addTodo(todoItem);
               },
               child: Text('저장'))
         ],

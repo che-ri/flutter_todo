@@ -1,10 +1,14 @@
 import 'package:app/todoItem.dart';
 import 'package:flutter/material.dart';
+
 import 'todoItem.dart';
 
+//provider
+import 'package:app/provider/todos.dart';
+import 'package:provider/provider.dart';
+
 class TodoListPage extends StatefulWidget {
-  List<TodoItem> list;
-  TodoListPage({Key? key, required this.list}) : super(key: key);
+  const TodoListPage({super.key});
 
   @override
   State<TodoListPage> createState() => _TodoListPageState();
@@ -13,11 +17,13 @@ class TodoListPage extends StatefulWidget {
 class _TodoListPageState extends State<TodoListPage> {
   @override
   Widget build(BuildContext context) {
+    var todo_list = context.watch<Todos>().todos;
+
     return Scaffold(
       body: Container(
         child: Center(
             child: ListView.builder(
-          itemCount: widget.list.length,
+          itemCount: todo_list.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               child: Card(
@@ -27,13 +33,13 @@ class _TodoListPageState extends State<TodoListPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Image.asset(widget.list[index].imagePath!,
+                          Image.asset(todo_list[index].imagePath!,
                               height: 80, width: 80, fit: BoxFit.cover),
-                          Text(widget.list[index].todo!),
+                          Text(todo_list[index].todo!),
                           ElevatedButton(
                               onPressed: () {
                                 setState(() {
-                                  widget.list.removeAt(index);
+                                  todo_list.removeAt(index);
                                 });
                               },
                               child: Text('삭제'))
@@ -42,16 +48,16 @@ class _TodoListPageState extends State<TodoListPage> {
               onTap: () {
                 AlertDialog dialog = AlertDialog(
                   content: Column(children: [
-                    Image.asset(widget.list[index].imagePath!,
+                    Image.asset(todo_list[index].imagePath!,
                         width: 100, height: 100, fit: BoxFit.cover),
                     Text(
-                      widget.list[index].todo!,
+                      todo_list[index].todo!,
                       style: TextStyle(fontSize: 30),
                     ),
                     ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            widget.list.removeAt(index);
+                            context.read<Todos>().delTodo(index);
                             Navigator.of(context).pop();
                           });
                         },
@@ -69,31 +75,3 @@ class _TodoListPageState extends State<TodoListPage> {
     );
   }
 }
-
-
-// Container(
-//             child: ListView.builder(
-//           itemCount: todoList.length,
-//           itemBuilder: (context, index) {
-//             return GestureDetector(
-//               child: Card(
-//                   child: Container(
-//                       height: 50,
-//                       padding: EdgeInsets.only(
-//                           left: 20, right: 20, top: 10, bottom: 10),
-//                       child: Row(
-//                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                         children: [
-//                           Text(todoList[index].todo!),
-//                           ElevatedButton(
-//                               onPressed: () {
-//                                 setState(() {
-//                                   todoList.removeAt(index);
-//                                 });
-//                               },
-//                               child: Icon(Icons.delete))
-//                         ],
-//                       ))),
-//             );
-//           },
-//         ))
