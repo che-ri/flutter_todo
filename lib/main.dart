@@ -30,58 +30,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: const MyHomePage(title: 'Flutter Todo'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
-  TabController? bottomNavigator;
-  // List<TodoItem> todoList = List.empty(growable: true);
-
-  @override
-  void initState() {
-    super.initState();
-    bottomNavigator = TabController(length: 2, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    bottomNavigator?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: TabBarView(
-        children: <Widget>[TodoListPage(), TodoWritePage()],
-        controller: bottomNavigator,
-      ),
-      bottomNavigationBar: TabBar(
-        tabs: <Tab>[
-          Tab(
-            icon: Icon(Icons.list_rounded, color: Colors.amber),
-          ),
-          Tab(
-            icon: Icon(Icons.edit, color: Colors.amber),
-          )
-        ],
-        controller: bottomNavigator,
-      ),
+      // home: const MyHomePage(title: 'Flutter Todo'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => TodoListPage(),
+        '/write': (context) => TodoWritePage()
+      },
     );
   }
 }

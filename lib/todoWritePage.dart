@@ -42,6 +42,7 @@ class _TodoWritePageState extends State<TodoWritePage> {
     var todo_list = context.watch<Todos>().todos;
 
     return Scaffold(
+      appBar: AppBar(title: Text('투두 작성')),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -96,6 +97,7 @@ class _TodoWritePageState extends State<TodoWritePage> {
                     todoItem.todo == null &&
                     todoItem.imagePath == null;
                 condition ? null : context.read<Todos>().addTodo(todoItem);
+                Navigator.of(context).pop();
               },
               child: Text('저장'))
         ],

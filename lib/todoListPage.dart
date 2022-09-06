@@ -20,6 +20,10 @@ class _TodoListPageState extends State<TodoListPage> {
     var todo_list = context.watch<Todos>().todos;
 
     return Scaffold(
+      appBar: AppBar(
+          title: Text(
+        '투두리스트',
+      )),
       body: Container(
         child: Center(
             child: ListView.builder(
@@ -43,32 +47,15 @@ class _TodoListPageState extends State<TodoListPage> {
                               child: Text('삭제'))
                         ],
                       ))),
-              onTap: () {
-                AlertDialog dialog = AlertDialog(
-                  content: Column(children: [
-                    Image.asset(todo_list[index].imagePath!,
-                        width: 100, height: 100, fit: BoxFit.cover),
-                    Text(
-                      todo_list[index].todo!,
-                      style: TextStyle(fontSize: 30),
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            context.read<Todos>().delTodo(index);
-                            Navigator.of(context).pop();
-                          });
-                        },
-                        child: Text('삭제'))
-                  ]),
-                );
-                showDialog(
-                    context: context,
-                    builder: ((BuildContext context) => dialog));
-              },
             );
           },
         )),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed('/write');
+        },
+        child: Icon(Icons.edit),
       ),
     );
   }
