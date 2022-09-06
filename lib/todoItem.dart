@@ -1,6 +1,6 @@
 class TodoItem {
   String? todo;
-  bool? achieved;
+  int? achieved;
   String? imagePath;
 
   TodoItem(

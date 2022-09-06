@@ -8,9 +8,7 @@ import '../todoItem.dart';
 class Todos extends ChangeNotifier {
   final List<TodoItem> _todos = [
     TodoItem(
-        todo: '출근하기',
-        achieved: true,
-        imagePath: 'assets/images/emoji_think.png')
+        todo: '출근하기', achieved: 0, imagePath: 'assets/images/emoji_think.png')
   ];
 
   List<TodoItem> get todos => _todos;
@@ -23,5 +21,11 @@ class Todos extends ChangeNotifier {
   void delTodo(int index) {
     _todos.removeAt(index);
     notifyListeners(); //상태가 변했다는 것을 ChangeNotifierProvider에 알려주기 위해 notifyListeners()을 호출한다.
+  }
+
+  void editTodo(int index, TodoItem todoItem) {
+    _todos.removeAt(index);
+    _todos.insert(index, todoItem);
+    notifyListeners();
   }
 }

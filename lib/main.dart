@@ -35,8 +35,12 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => TodoListPage(),
-        '/write': (context) => TodoWritePage(),
-        '/detail': (context) => TodoDetailPage()
+        '/write': (context) => TodoWritePage(
+            args: ModalRoute.of(context)!.settings.arguments
+                as Map<String, dynamic>),
+        '/detail': (context) => TodoDetailPage(
+            args: ModalRoute.of(context)!.settings.arguments
+                as Map<String, dynamic>)
       },
     );
   }

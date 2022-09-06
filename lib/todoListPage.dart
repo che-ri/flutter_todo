@@ -31,7 +31,8 @@ class _TodoListPageState extends State<TodoListPage> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                Navigator.of(context).pushNamed('/detail', arguments: index);
+                Navigator.of(context).pushNamed('/detail',
+                    arguments: {'index': index.toString()});
               },
               child: Card(
                   child: Container(
@@ -42,7 +43,18 @@ class _TodoListPageState extends State<TodoListPage> {
                         children: [
                           Image.asset(todo_list[index].imagePath!,
                               height: 80, width: 80, fit: BoxFit.cover),
-                          Text(todo_list[index].todo!),
+                          Column(
+                            children: [
+                              Text(
+                                  todo_list[index].achieved == 0 ? '진행중' : '완료',
+                                  style: TextStyle(
+                                      color: Colors.amber[800], fontSize: 12)),
+                              Text(
+                                todo_list[index].todo!,
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ],
+                          ),
                           ElevatedButton(
                               onPressed: () {
                                 context.read<Todos>().delTodo(index);
@@ -56,7 +68,7 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed('/write');
+          Navigator.of(context).pushNamed('/write', arguments: {'index': null});
         },
         child: Icon(Icons.edit),
       ),

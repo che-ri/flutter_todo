@@ -5,7 +5,8 @@ import 'package:app/provider/todos.dart';
 import 'package:provider/provider.dart';
 
 class TodoDetailPage extends StatefulWidget {
-  const TodoDetailPage({super.key});
+  final Map<String, dynamic>? args;
+  const TodoDetailPage({Key? key, required this.args}) : super(key: key);
 
   @override
   State<TodoDetailPage> createState() => _TodoDetailPageState();
@@ -15,7 +16,7 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments.toString();
-    int todo_index = int.parse(args);
+    var todo_index = int.parse(widget.args!['index']);
     var todo_list = context.read<Todos>().todos;
     var todo_item = todo_list[todo_index];
 
@@ -36,7 +37,7 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
             style: TextStyle(fontSize: 30),
           ),
           Text(
-            todo_item.achieved! ? '진행중' : '완료',
+            todo_item.achieved == 0 ? '진행중' : '완료',
             style: TextStyle(color: Colors.amber[900]),
           ),
           Padding(padding: EdgeInsets.all(20)),
@@ -46,7 +47,7 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
               ElevatedButton(
                   onPressed: () {
                     Navigator.of(context)
-                        .pushNamed('/write', arguments: todo_index);
+                        .pushNamed('/write', arguments: {'index': todo_index});
                   },
                   child: Text('수정')),
               Padding(padding: EdgeInsets.all(5)),
