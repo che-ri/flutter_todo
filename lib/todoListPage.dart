@@ -38,9 +38,7 @@ class _TodoListPageState extends State<TodoListPage> {
                           Text(todo_list[index].todo!),
                           ElevatedButton(
                               onPressed: () {
-                                setState(() {
-                                  todo_list.removeAt(index);
-                                });
+                                context.read<Todos>().delTodo(index);
                               },
                               child: Text('삭제'))
                         ],

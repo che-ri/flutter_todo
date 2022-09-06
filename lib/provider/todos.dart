@@ -17,11 +17,11 @@ class Todos extends ChangeNotifier {
 
   void addTodo(TodoItem todo) {
     _todos.add(todo);
-    // notifyListeners(); //상태가 변했다는 것을 ChangeNotifierProvider에 알려주기 위해 notifyListeners()을 호출한다.
+    notifyListeners(); //상태가 변했다는 것을 ChangeNotifierProvider에 알려주기 위해 notifyListeners()을 호출한다.
   }
 
   void delTodo(int index) {
     _todos.removeAt(index);
-    // notifyListeners(); //상태가 변했다는 것을 ChangeNotifierProvider에 알려주기 위해 notifyListeners()을 호출한다.
+    notifyListeners(); //상태가 변했다는 것을 ChangeNotifierProvider에 알려주기 위해 notifyListeners()을 호출한다.
   }
 }
